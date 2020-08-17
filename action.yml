@@ -1,0 +1,23 @@
+name: 'Sonar Scanner'
+description: 'Performs a Sonar scan'
+inputs:
+  sonar-scanner-image:
+    description: 'Docker image to run sonar-scanner with'
+    required: true
+  sonar-host-url:
+    description: 'Sonarqube server URL'
+    required: true
+  sonar-token:
+    description: 'Sonar token'
+    required: true
+  sonar-project-base-dir:
+    description: 'project directory, if not the project root: must contain a sonar-project.properties file'
+    required: false
+runs:
+  using: 'docker'
+  image: ${{ inputs.sonar-scanner-image }}
+  entrypoint: 'entrypoint.sh'
+  args:
+    - ${{ inputs.sonar-host-url }}
+    - ${{ inputs.sonar-token }}
+    - ${{ inputs.sonar-project-base-dir }}
